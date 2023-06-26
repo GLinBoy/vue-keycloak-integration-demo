@@ -13,6 +13,17 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/unsecure',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'unsecure',
+        component: () => import('@/views/UnSecure.vue'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({
