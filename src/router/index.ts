@@ -24,6 +24,17 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/user_secure',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'user-secure',
+        component: () => import('@/views/UserSecure.vue'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({
