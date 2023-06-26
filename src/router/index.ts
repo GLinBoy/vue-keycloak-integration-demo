@@ -35,6 +35,17 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/admin_secure',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'admin-secure',
+        component: () => import('@/views/AdminSecure.vue'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({
