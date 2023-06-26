@@ -1,7 +1,9 @@
 # This configuration is intended for development purpose, it's **your** responsibility to harden it for production
 version: '3.8'
+name: vue-keycloak
 services:
   keycloak:
+    container_name: keycloak-dev
     image: quay.io/keycloak/keycloak:21.1.1
     command:
       [
