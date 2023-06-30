@@ -46,6 +46,17 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/unauthorized',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'unauthorized',
+        component: () => import('@/views/Unauthorized.vue'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({
