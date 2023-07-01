@@ -1,5 +1,6 @@
 // Composables
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, RouteLocationRaw } from 'vue-router'
+import authPromise from '@/plugins/keycloak'
 
 const routes = [
   {
@@ -62,6 +63,23 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+})
+
+router.beforeEach((to, from, next) => {
+  console.log(to.meta.skipAuth)
+  if (to.meta.skipAuth) {
+    next()
+  } else {
+    authPromise.then(async auth => {
+      if (auth.isAuthenticated()) {
+        next()
+      } else {
+        const redirect: RouteLocationRaw = { query: { ...to.query, 'sync_me': null } }
+        const redirectUri = `${location.origin}${router.resolve(redirect, to).href}`
+        auth.login(redirectUri)
+      }
+    })
+  }
 })
 
 export default router
