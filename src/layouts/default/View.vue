@@ -7,8 +7,31 @@
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer">
-      <v-list>
-        <v-list-item title="Navigation drawer"></v-list-item>
+      <v-list nav>
+        <v-list-item
+          prepend-icon="mdi-home-outline"
+          title="Home"
+          value="home"
+          to="/"
+        ></v-list-item>
+        <v-list-item
+          prepend-icon="mdi-lock-off-outline"
+          title="Un-Secure"
+          value="unsecure"
+          to="/unsecure"
+        ></v-list-item>
+        <v-list-item
+          prepend-icon="mdi-lock-outline"
+          title="User Secure"
+          value="user-secure"
+          to="/user_secure"
+        ></v-list-item>
+        <v-list-item
+          prepend-icon="mdi-shield-account-outline"
+          title="Admin Secure"
+          value="admin-secure"
+          to="/admin_secure"
+        ></v-list-item>
       </v-list>
     </v-navigation-drawer>
 
