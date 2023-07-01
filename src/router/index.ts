@@ -69,7 +69,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log(to.meta.skipAuth)
   if (!to.meta.isAuthenticated) {
     next()
   } else {
