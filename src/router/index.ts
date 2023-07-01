@@ -33,6 +33,7 @@ const routes = [
         path: '',
         name: 'user-secure',
         component: () => import('@/views/UserSecure.vue'),
+        meta: { isAuthenticated: true },
       },
     ],
   },
@@ -44,6 +45,7 @@ const routes = [
         path: '',
         name: 'admin-secure',
         component: () => import('@/views/AdminSecure.vue'),
+        meta: { isAuthenticated: true },
       },
     ],
   },
@@ -55,6 +57,7 @@ const routes = [
         path: '',
         name: 'unauthorized',
         component: () => import('@/views/Unauthorized.vue'),
+        meta: { isAuthenticated: true },
       },
     ],
   },
@@ -67,7 +70,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   console.log(to.meta.skipAuth)
-  if (to.meta.skipAuth) {
+  if (!to.meta.isAuthenticated) {
     next()
   } else {
     authPromise.then(async auth => {
@@ -79,6 +82,19 @@ router.beforeEach((to, from, next) => {
         auth.login(redirectUri)
       }
     })
+  }
+})
+
+router.beforeEach((to, from, next) => {
+  if ('sync_me' in to.query) {
+    authPromise.then(async auth => {
+      console.log('Authenticated')
+    }).finally(() => {
+      delete to.query.sync_me // remove sync_me query parameter to avoid endless recursion
+      next({ path: to.path, query: to.query, params: to.params, replace: true })
+    })
+  } else {
+    next()
   }
 })
 
