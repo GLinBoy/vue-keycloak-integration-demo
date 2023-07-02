@@ -29,7 +29,9 @@
               <v-divider class="my-3"></v-divider>
               <v-btn rounded variant="text"> Profile </v-btn>
               <v-divider class="my-3"></v-divider>
-              <v-btn rounded variant="text"> Logout </v-btn>
+              <v-btn rounded variant="text" @click="logoutAccount">
+                Logout
+              </v-btn>
             </div>
           </v-card-text>
         </v-card>
@@ -78,4 +80,8 @@
 import { ref } from "vue";
 import authPromise from "@/plugins/keycloak";
 const drawer = ref(true);
+const logoutAccount = () =>
+  authPromise.then(async (auth) => {
+    auth.logout(`${location.origin}`);
+  });
 </script>
