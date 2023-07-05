@@ -1,4 +1,4 @@
-import Keycloak from 'keycloak-js'
+import Keycloak, { KeycloakProfile } from 'keycloak-js'
 
 class Auth {
   private readonly keycloak: Keycloak
@@ -44,6 +44,11 @@ class Auth {
 
   public isUser(): boolean {
     return this.keycloak.tokenParsed?.realm_access?.roles.includes('user') ?? false
+  }
+
+  public async userInfo(): Promise<KeycloakProfile | undefined> {
+    await this.keycloak.loadUserProfile();
+    return this.keycloak?.profile;
   }
 }
 
