@@ -33,7 +33,10 @@ const routes = [
         path: '',
         name: 'user-secure',
         component: () => import('@/views/UserSecure.vue'),
-        meta: { isAuthenticated: true },
+        meta: {
+          isAuthenticated: true,
+          requiredRole: ['admin', 'user'],
+        },
       },
     ],
   },
@@ -45,7 +48,10 @@ const routes = [
         path: '',
         name: 'admin-secure',
         component: () => import('@/views/AdminSecure.vue'),
-        meta: { isAuthenticated: true },
+        meta: {
+          isAuthenticated: true,
+          requiredRole: ['admin'],
+        },
       },
     ],
   },
@@ -78,7 +84,13 @@ router.beforeEach((to, from, next) => {
     next()
   } else {
     authPromise.then(async auth => {
-      if (auth.isAuthenticated()) {
+      if (auth.isAuthenticated() && to.path !== '/unauthorized') {
+        if (to.meta?.requiredRole?.some(r => auth.userRoles().includes(r))) {
+          next()
+        } else {
+          next('/unauthorized')
+        }
+      } else if (auth.isAuthenticated() && to.path === '/unauthorized') {
         next()
       } else {
         const redirect: RouteLocationRaw = { query: { ...to.query, 'sync_me': null } }
