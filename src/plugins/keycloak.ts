@@ -38,6 +38,10 @@ class Auth {
     return this.keycloak.token
   }
 
+  public userRoles(): string[] {
+    return this.keycloak.tokenParsed?.realm_access?.roles ?? []
+  }
+
   public isAdmin(): boolean {
     return this.keycloak.tokenParsed?.realm_access?.roles.includes('admin') ?? false
   }
