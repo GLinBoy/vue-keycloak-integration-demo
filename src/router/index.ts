@@ -56,6 +56,20 @@ const routes = [
     ],
   },
   {
+    path: '/profile',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'profile',
+        component: () => import('@/views/Profile.vue'),
+        meta: {
+          isAuthenticated: true,
+        },
+      },
+    ],
+  },
+  {
     path: '/unauthorized',
     component: () => import('@/layouts/default/Default.vue'),
     children: [
@@ -63,7 +77,9 @@ const routes = [
         path: '',
         name: 'unauthorized',
         component: () => import('@/views/Unauthorized.vue'),
-        meta: { isAuthenticated: true },
+        meta: {
+          isAuthenticated: true
+        },
       },
     ],
   },
@@ -85,7 +101,7 @@ router.beforeEach((to, from, next) => {
   } else {
     authPromise.then(async auth => {
       if (auth.isAuthenticated() && to.path !== '/unauthorized') {
-        if (to.meta?.requiredRole?.some(r => auth.userRoles().includes(r))) {
+        if (!to.meta?.requiredRole || to.meta?.requiredRole?.some(r => auth.userRoles().includes(r))) {
           next()
         } else {
           next('/unauthorized')
