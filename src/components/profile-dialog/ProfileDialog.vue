@@ -84,8 +84,9 @@
     </v-chip>
 
     <v-btn
-      variant="outlined"
+      v-show="false"
       block
+      variant="outlined"
       color="primary"
       rounded="x-large"
       prepend-icon="mdi-shield-key-outline"
