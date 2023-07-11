@@ -72,6 +72,17 @@
       readonly
     ></v-text-field>
 
+    <v-chip
+      v-for="role in userRoles"
+      :key="role"
+      class="ma-2"
+      color="primary"
+      text-color="white"
+      prepend-icon="mdi-tag-text"
+    >
+      {{ role }}
+    </v-chip>
+
     <v-btn
       variant="outlined"
       block
