@@ -13,9 +13,21 @@
             <h3>{{ fullname }}</h3>
             <p class="text-caption mt-1">{{ userEmail }}</p>
             <v-divider class="my-3"></v-divider>
-            <v-btn rounded variant="text"> Profile </v-btn>
+            <v-btn
+              color="primary"
+              variant="text"
+              :to="{ name: 'profile' }"
+              prepend-icon="mdi-card-account-details-outline"
+            >
+              Profile
+            </v-btn>
             <v-divider class="my-3"></v-divider>
-            <v-btn rounded variant="text" @click="logoutAccount()">
+            <v-btn
+              color="primary"
+              variant="text"
+              @click="logoutAccount()"
+              prepend-icon="mdi-logout-variant"
+            >
               Logout
             </v-btn>
           </div>
