@@ -105,7 +105,6 @@ const userProfile: KeycloakProfile = reactive({});
 const userRoles: Ref<string[]> = ref<string[]>([]);
 
 onMounted(() => {
-  console.info("Load user profile...");
   authPromise.then((auth) => {
     if (auth.isAuthenticated()) {
       auth.userInfo().then((usr) => {
@@ -119,10 +118,7 @@ onMounted(() => {
         userProfile.totp = usr?.totp;
         userProfile.createdTimestamp = usr?.createdTimestamp;
       });
-      console.info(userProfile);
       userRoles.value = auth.userRoles();
-      console.info(userRoles.value);
-      console.info("User Profile Loaded.");
     }
   });
 });
