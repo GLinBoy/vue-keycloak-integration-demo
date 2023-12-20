@@ -4,7 +4,7 @@ name: vue-keycloak
 services:
   keycloak:
     container_name: keycloak-dev
-    image: quay.io/keycloak/keycloak:23.0.1
+    image: quay.io/keycloak/keycloak:23.0.3
     command: ['start-dev --import-realm']
     volumes:
       - ./realm-config:/opt/keycloak/data/import
