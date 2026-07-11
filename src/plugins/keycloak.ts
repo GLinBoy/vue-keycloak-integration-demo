@@ -4,7 +4,7 @@ class Auth {
   private readonly keycloak: Keycloak
 
   static async build(): Promise<Auth> {
-    const keycloak = new Keycloak()
+    const keycloak = new Keycloak('/keycloak.json')
     keycloak.onTokenExpired = () => keycloak.updateToken(30) //TODO: show notification with .catch(() => notify-user-somehow);
     await keycloak.init({
       checkLoginIframe: false,
