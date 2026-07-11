@@ -117,13 +117,13 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   if ('sync_me' in to.query) {
-    authPromise.then(async auth => {
+    authPromise.then(async () => {
       console.log('Authenticated')
     }).finally(() => {
-      delete to.query.sync_me // remove sync_me query parameter to avoid endless recursion
-      next({ path: to.path, query: to.query, params: to.params, replace: true })
+      const { sync_me: _, ...query } = to.query
+      next({ path: to.path, query, params: to.params, replace: true } as RouteLocationRaw)
     })
   } else {
     next()
